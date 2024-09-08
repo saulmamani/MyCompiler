@@ -68,7 +68,7 @@ namespace MyCompiler
                         string unrecognized = line.Substring(currentIndex, matchStartIndex - currentIndex);
                         if (!string.IsNullOrWhiteSpace(unrecognized))
                         {
-                            this.Errors.Add($"Error ({lineNumber}:{currentIndex + 1}): {unrecognized} -> No se reconce la cadena");
+                            Errors.Add($"Error ({lineNumber}:{currentIndex + 1}): {unrecognized} -> No se reconce la cadena");
                         }
                     }
 
@@ -95,7 +95,7 @@ namespace MyCompiler
                     string unrecognized = line.Substring(currentIndex);
                     if (!string.IsNullOrWhiteSpace(unrecognized))
                     {
-                        this.Errors.Add($"Error ({lineNumber}:{currentIndex + 1}): {unrecognized} -> No se reconce la cadena");
+                        Errors.Add($"Error ({lineNumber}:{currentIndex + 1}): {unrecognized} -> No se reconce la cadena");
                     }
                 }
 
