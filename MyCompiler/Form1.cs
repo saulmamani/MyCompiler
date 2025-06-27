@@ -13,7 +13,9 @@ namespace MyCompiler
     public partial class Form1 : Form
     {
         string _currentFileName = string.Empty;
+        List<Simbolo> _tablaSimbolos = new List<Simbolo>();
         private Lexico _lexico = new Lexico();
+        private Sintactico _sintactico = new Sintactico();
 
         public Form1()
         {
@@ -28,15 +30,22 @@ namespace MyCompiler
 
         private void btnLexico_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = _lexico.Analizar(sourceTextBox.Text);
+            _tablaSimbolos.Clear();
+            _tablaSimbolos = _lexico.Analizar(sourceTextBox.Text);
+            dataGridView1.DataSource = _tablaSimbolos;
 
             if (_lexico.Errors.Count > 0)
             {
                 MessageBox.Show("Se encontraron errores léxicos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _tablaSimbolos.Clear();
+                listErrors.DataSource = _lexico.Errors;
+            }
+            else
+            {
+                listErrors.DataSource = null;
+                SetMessage("Análisis léxico finalizado sin errores");
             }
 
-            listErrors.DataSource = _lexico.Errors;
-            SetMessage("Análisis léxico finalizado");
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -118,6 +127,26 @@ namespace MyCompiler
         private void SetMessage(string message)
         {
             toolStripStatusMessage.Text = message;
+        }
+
+        private void btnSintactico_Click(object sender, EventArgs e)
+        {
+            if (_tablaSimbolos.Count <= 0)
+                MessageBox.Show("Ejecute el Analizador Lexico Primero", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                bool resultado = _sintactico.Analizar(_tablaSimbolos);
+                if (!resultado)
+                {
+                    MessageBox.Show("Se encontraron errores sintácticos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    listErrors.DataSource = _sintactico.Errors;
+                }
+                else
+                {
+                    listErrors.DataSource = null;
+                    SetMessage("Análisis sintáctico finalizado sin errores");
+                }
+            }
         }
     }
 }

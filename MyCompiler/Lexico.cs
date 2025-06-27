@@ -17,11 +17,11 @@ namespace MyCompiler
             {"Comentario", @"//.*"},
             {"ComentarioBloque", @"/\*.*?\*/"},
             {"PalabraReservada", @"\b(void|main|echo)\b"},
-            {"TipoDato", @"\b(int|float|string|char)\b"},
+            {"Tipo", @"\b(int|float|string|char)\b"},
             {"Texto", "\"[^\"]*\""},
             {"Id", @"\b_?[a-zA-Z]+_?([a-zA-Z]|\d|_)*\b"},
-            {"NumReal", @"[+-]?(\d+\.\d*|\.\d+)([eE][+-]?\d+)?"},
-            {"Num", @"[+-]?\d+"},
+            {"Real", @"[+-]?(\d+\.\d*|\.\d+)([eE][+-]?\d+)?"},
+            {"Entero", @"[+-]?\d+"},
             {"Asignacion", @"="},
             {"FinSentencia", @"[;]"},
             {"ParenAbre",@"[\(]"},
@@ -88,7 +88,7 @@ namespace MyCompiler
                     string unrecognized = line.Substring(currentIndex);
                     if (!string.IsNullOrWhiteSpace(unrecognized))
                     {
-                        Errors.Add($"Error ({lineNumber}:{currentIndex + 1}): {unrecognized} -> No se reconce la cadena");
+                        Errors.Add($"Error ({lineNumber}:{currentIndex + 1}): {unrecognized} -> No se reconce el simbolo");
                     }
                 }
 
